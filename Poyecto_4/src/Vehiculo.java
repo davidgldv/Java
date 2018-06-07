@@ -6,7 +6,6 @@ public class Vehiculo {
 		
 		
 		public Vehiculo(String marca, String modelo, String matricula) {
-			super();
 			this.marca = marca;
 			this.modelo = modelo;
 			this.matricula = matricula;
