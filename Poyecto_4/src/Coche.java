@@ -3,10 +3,10 @@ public class Coche extends Vehiculo {
 	
 	//Atributos
 			String dni;
-			boolean electrico;
+			String electrico;
 			
 	//Constructor
-			public Coche(String marca, String modelo, String matricula,String dni,boolean electrico) {
+			public Coche(String marca, String modelo, String matricula,String dni,String electrico) {
 				super(marca, modelo, matricula);
 				this.dni = dni;
 				this.electrico = electrico;				
@@ -19,14 +19,17 @@ public class Coche extends Vehiculo {
 			public void setDni(String dni) {
 				this.dni = dni;
 			}
-			public boolean isElectrico() {
+
+			
+			public String getElectrico() {
 				return electrico;
 			}
-			public void setElectrico(boolean electrico) {
+
+			public void setElectrico(String electrico) {
 				this.electrico = electrico;
 			}
-			
-	//Metodo de escribir los atributos
+
+			//Metodo de escribir los atributos
 			@Override
 			public String toString() {
 				return "Coche [dni=" + dni + ", electrico=" + electrico + ", marca=" + marca + ", modelo=" + modelo

@@ -15,8 +15,7 @@ public class Principal {
 		int fila = 0;									//Fila y columna que introduce el usuario
 		int columna = 0;								
 		int nVehiculos = 0;								//Contador de vehiculos
-		Object vehiculo = new ArrayList<Object>();		//Crear array de objetos para guardar datos vehiculos
-		boolean res = true;								//Booleano para ver si hay hueco o no se equivoca el usuario de sitio
+		boolean res = false;							//Booleano para ver si hay hueco o no se equivoca el usuario de sitio
 
 		InicializarMatriz(matriz, filas, columnas);		//Inicializa los valores de la matriz
 
@@ -43,40 +42,45 @@ public class Principal {
 			case 2:
 				if (nVehiculos == 24) {											//Condicion para ver si el parking esta lleno
 					System.out.println("Parking Lleno");
-				} else
-					res = IntroducirCoche(matriz, fila, columna, teclado,nVehiculos, vehiculo);		//Funcion para introducir coche
+				} else {
+					res = IntroducirCoche(matriz, fila, columna, teclado);		//Funcion para introducir coche
 				if (res == true) {
 					cuota += 5;													//Incremento de cuota
 					nVehiculos++;												//Incremento de contador
+					}
 				}
 				break;
 			case 3:
 				if (nVehiculos == 24) {											//Condicion para ver si el parking esta lleno
 					System.out.println("Parking Lleno");
-				} else
+				} else {
 					res = IntroducirMoto(matriz, filas, columnas, teclado);		//Funcion para introducir moto
 				if (res == true) {
 					cuota += 3;													//Incremento de cuota
 					nVehiculos++;												//Incremento de contador
+					}
 				}
 				break;
 			case 4:
 				if (nVehiculos == 24) {											//Condicion para ver si el parking esta lleno
 					System.out.println("Parking Lleno");
-				} else
+				} else {
 					res = IntroducirAutobus(matriz, filas, columnas, teclado);	//Funcion para introducir autobus
 				if (res == true) {
 					cuota += 10;												//Incremento de cuota
 					nVehiculos++;												//Incremento de contador
+					}
 				}
 				break;
 			case 5:
 				if (nVehiculos == 0) {											//Condicion para ver si el parking esta vacio
 					System.out.println("Parking Vacio");
 				}
+				else {
 				res=SacarVehiculo(matriz, fila, columna, teclado);				//Funcion para introducir autobus
 				if (res == true) {
 					nVehiculos--;												//Incremento de contador
+				}
 				}
 				break;
 			case 6:
@@ -130,12 +134,12 @@ public class Principal {
 	}
 	
 //Funcion que comprueba si se puede introducir un coche en la posicion deseada y si puede,lo introduce en la matriz,tambien pide los datos al usuario del vehiculo
-	private static boolean IntroducirCoche(char[][] matriz, int fila, int columna, Scanner teclado, int nVehiculos,Object vehiculo) {
+	private static boolean IntroducirCoche(char[][] matriz, int fila, int columna, Scanner teclado) {
 		String marca=null;
 		String modelo=null;
 		String matricula=null;
 		String dni=null;
-		boolean electrico= false;
+		String electrico= null;
 		
 		try {
 			System.out.println("Introduce la fila: ");
@@ -162,7 +166,17 @@ public class Principal {
 				}
 			} else {
 				matriz[fila - 1][columna - 1] = 'C';
-				vehiculo= new Coche(marca,modelo,matricula,dni,electrico) ;
+				System.out.println("Introduce la marca:");
+				marca=teclado.next();
+				System.out.println("Introduce el modelo:");
+				modelo=teclado.next();
+				System.out.println("Introduce la matricla:");
+				matricula=teclado.next();
+				System.out.println("Introduce tu dni:");
+				dni=teclado.next();
+				System.out.println("Es electrico:");
+				electrico=teclado.next();
+				Coche c1= new Coche(marca,modelo,matricula,dni,electrico) ;
 				return true;
 			}
 
@@ -178,7 +192,10 @@ public class Principal {
 	
 //Funcion que comprueba si se puede introducir una moto en la posicion deseada y si puede,lo introduce en la matriz,tambien pide los datos al usuario del vehiculo
 	private static boolean IntroducirMoto(char[][] matriz, int fila, int columna, Scanner teclado) {
-
+		String marca=null;
+		String modelo=null;
+		String matricula=null;
+		String cilindrada=null;
 		try {
 			System.out.println("Introduce la fila: ");
 			fila = teclado.nextInt();
@@ -204,7 +221,15 @@ public class Principal {
 				}
 			} else {
 				matriz[fila - 1][columna - 1] = 'M';
-				
+				System.out.println("Introduce la marca:");
+				marca=teclado.next();
+				System.out.println("Introduce el modelo:");
+				modelo=teclado.next();
+				System.out.println("Introduce la matricla:");
+				matricula=teclado.next();
+				System.out.println("Introduce la cilindrada:");
+				cilindrada=teclado.next();
+				Moto m1= new Moto(marca,modelo,matricula,cilindrada) ;
 				return true;
 			}
 
@@ -220,7 +245,11 @@ public class Principal {
 
 //Funcion que comprueba si se puede introducir un autobus en la posicion deseada y si puede  lo introduce en la matriz,tambien pide los datos al usuario del vehiculo
 	private static boolean IntroducirAutobus(char[][] matriz, int fila, int columna, Scanner teclado) {
-
+		String marca=null;
+		String modelo=null;
+		String matricula=null;
+		int plazas=0;
+		String compañia=null;
 		try {
 			System.out.println("Introduce la fila: ");
 			fila = teclado.nextInt();
@@ -246,6 +275,18 @@ public class Principal {
 				}
 			} else {
 				matriz[fila - 1][columna - 1] = 'A';
+				System.out.println("Introduce la marca:");
+				marca=teclado.next();
+				System.out.println("Introduce el modelo:");
+				modelo=teclado.next();
+				System.out.println("Introduce la matricla:");
+				matricula=teclado.next();
+				System.out.println("Introduce tu compañia:");
+				compañia=teclado.next();
+				System.out.println("Nºplazas:");
+				plazas=teclado.nextInt();
+				Autobus c1= new Autobus(marca,modelo,matricula,plazas,compañia) ;
+				return true;
 			}
 		} catch (InputMismatchException error) {
 			System.out.println("No introduzca palabras raras");
