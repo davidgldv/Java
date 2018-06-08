@@ -1,5 +1,7 @@
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Principal {
 
@@ -13,6 +15,8 @@ public class Principal {
 		int fila = 0;
 		int columna = 0;
 		int nVehiculos = 0;
+		Object vehiculo = new ArrayList<Object>();
+		boolean res=true;
 
 		InicializarMatriz(matriz, filas, columnas);
 
@@ -39,24 +43,31 @@ public class Principal {
 				if (nVehiculos == 24) {
 					System.out.println("Parking Lleno");
 				} else
-					IntroducirCoche(matriz, fila, columna, teclado);
-				cuota += 5;
-				nVehiculos++;
+					res=IntroducirCoche(matriz, fila, columna, teclado);
+				if(res == true) {
+					cuota+=5;
+					nVehiculos++;
+					}
 				break;
 			case 3:
 				if (nVehiculos == 24) {
 					System.out.println("Parking Lleno");
 				} else
-					IntroducirMoto(matriz, filas, columnas, teclado);
-				cuota += 3;
-				nVehiculos++;
+					res=IntroducirMoto(matriz, filas, columnas, teclado);
+				if(res == true) {
+					cuota+=3;
+					nVehiculos++;
+					}
 				break;
 			case 4:
 				if (nVehiculos == 24) {
 					System.out.println("Parking Lleno");
 				} else
-					IntroducirAutobus(matriz, filas, columnas, teclado, cuota);
-				nVehiculos++;
+					res=IntroducirAutobus(matriz, filas, columnas, teclado);
+					if(res == true) {
+						cuota+=10;
+						nVehiculos++;
+						}
 				break;
 			case 5:
 				if (nVehiculos == 0) {
@@ -113,7 +124,7 @@ public class Principal {
 		}
 	}
 
-	private static void IntroducirCoche(char[][] matriz, int fila, int columna, Scanner teclado) {
+	private static boolean IntroducirCoche(char[][] matriz, int fila, int columna, Scanner teclado) {
 
 		try {
 			System.out.println("Introduce la fila: ");
@@ -127,26 +138,33 @@ public class Principal {
 					|| matriz[fila - 1][columna - 1] == 'A') {
 				if (matriz[fila - 1][columna - 1] == 'E' || matriz[fila - 1][columna - 1] == 'S') {
 					System.out.println("Esta la salida o la entrada");
+					return false;
 				}
 				if (matriz[fila - 1][columna - 1] == 'X' || matriz[fila - 1][columna - 1] == 'P') {
 					System.out.println("Es pared o columna");
+					return false;
 				}
 				if (matriz[fila - 1][columna - 1] == 'A' || matriz[fila - 1][columna - 1] == 'C'
 						|| matriz[fila - 1][columna - 1] == 'M') {
 					System.out.println("Esta plaza ya esta ocupada");
+					return false;
 				}
 			} else {
 				matriz[fila - 1][columna - 1] = 'C';
+				
 			}
 
 		} catch (InputMismatchException error) {
 			System.out.println("No introduzca palabras raras");
+			return false;
 		} catch (ArrayIndexOutOfBoundsException error) {
 			System.out.println("El valor introducido no es correcto");
+			return false;
 		}
+		return true;
 	}
 
-	private static void IntroducirMoto(char[][] matriz, int fila, int columna, Scanner teclado) {
+	private static boolean IntroducirMoto(char[][] matriz, int fila, int columna, Scanner teclado) {
 
 		try {
 			System.out.println("Introduce la fila: ");
@@ -160,26 +178,33 @@ public class Principal {
 					|| matriz[fila - 1][columna - 1] == 'A') {
 				if (matriz[fila - 1][columna - 1] == 'E' || matriz[fila - 1][columna - 1] == 'S') {
 					System.out.println("Esta la salida o la entrada");
+					return false;
 				}
 				if (matriz[fila - 1][columna - 1] == 'X' || matriz[fila - 1][columna - 1] == 'P') {
 					System.out.println("Es pared o columna");
+					return false;
 				}
 				if (matriz[fila - 1][columna - 1] == 'A' || matriz[fila - 1][columna - 1] == 'C'
 						|| matriz[fila - 1][columna - 1] == 'M') {
 					System.out.println("Esta plaza ya esta ocupada");
+					return false;
 				}
 			} else {
 				matriz[fila - 1][columna - 1] = 'M';
+				return true;
 			}
 
 		} catch (InputMismatchException error) {
 			System.out.println("No introduzca palabras raras");
+			return false;
 		} catch (ArrayIndexOutOfBoundsException error) {
 			System.out.println("El valor introducido no es correcto");
+			return false;
 		}
+		return  true;
 	}
 
-	private static void IntroducirAutobus(char[][] matriz, int fila, int columna, Scanner teclado, int cuota) {
+	private static boolean IntroducirAutobus(char[][] matriz, int fila, int columna, Scanner teclado) {
 
 		try {
 			System.out.println("Introduce la fila: ");
@@ -193,23 +218,28 @@ public class Principal {
 					|| matriz[fila - 1][columna - 1] == 'A') {
 				if (matriz[fila - 1][columna - 1] == 'E' || matriz[fila - 1][columna - 1] == 'S') {
 					System.out.println("Esta la salida o la entrada");
+					return false;
 				}
 				if (matriz[fila - 1][columna - 1] == 'X' || matriz[fila - 1][columna - 1] == 'P') {
 					System.out.println("Es pared o columna");
+					return false;
 				}
 				if (matriz[fila - 1][columna - 1] == 'A' || matriz[fila - 1][columna - 1] == 'C'
 						|| matriz[fila - 1][columna - 1] == 'M') {
 					System.out.println("Esta plaza ya esta ocupada");
+					return false;
 				}
 			} else {
 				matriz[fila - 1][columna - 1] = 'A';
-				cuota += 10;
 			}
 		} catch (InputMismatchException error) {
 			System.out.println("No introduzca palabras raras");
+			return false;
 		} catch (ArrayIndexOutOfBoundsException error) {
 			System.out.println("El valor introducido no es correcto");
+			return false;
 		}
+		return true;
 	}
 
 	private static void MostrarBeneficio(int cuota) {
