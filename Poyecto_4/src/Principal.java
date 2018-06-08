@@ -44,7 +44,7 @@ public class Principal {
 				if (nVehiculos == 24) {											//Condicion para ver si el parking esta lleno
 					System.out.println("Parking Lleno");
 				} else
-					res = IntroducirCoche(matriz, fila, columna, teclado);		//Funcion para introducir coche
+					res = IntroducirCoche(matriz, fila, columna, teclado,nVehiculos, vehiculo);		//Funcion para introducir coche
 				if (res == true) {
 					cuota += 5;													//Incremento de cuota
 					nVehiculos++;												//Incremento de contador
@@ -102,16 +102,16 @@ public class Principal {
 		for (int f = 0; f < filas; f++) {
 			for (int c = 0; c < columnas; c++) {
 				matriz[f][c] = ' ';
-				if ((f == 0) || (f == 4) || (c == 9) || (c == 0)) {
+				if ((f == 0) || (f == 4) || (c == 9) || (c == 0)) {      												//Comprueba si es pared
 					matriz[f][c] = 'P';
 				}
-				if ((c == 0) && (f == 0) || (c == 9) && (f == 0) || (c == 9) && (f == 4) || (c == 0) && (f == 4)) {
+				if ((c == 0) && (f == 0) || (c == 9) && (f == 0) || (c == 9) && (f == 4) || (c == 0) && (f == 4)) {		//Comprueba si es columna
 					matriz[f][c] = 'X';
 				}
-				if ((f == 1) && (c == 0)) {
+				if ((f == 1) && (c == 0)) {																				//Comprueba si es la entrada
 					matriz[f][c] = 'E';
 				}
-				if ((f == 3) && (c == 0)) {
+				if ((f == 3) && (c == 0)) {																				//Comprueba si es la salida
 					matriz[f][c] = 'S';
 				}
 			}
@@ -129,9 +129,14 @@ public class Principal {
 		}
 	}
 	
-//Funcion que comprueba si se puede introducir un coche en la posicion deseada y si puede,lo introduce en la matriz
-	private static boolean IntroducirCoche(char[][] matriz, int fila, int columna, Scanner teclado) {
-
+//Funcion que comprueba si se puede introducir un coche en la posicion deseada y si puede,lo introduce en la matriz,tambien pide los datos al usuario del vehiculo
+	private static boolean IntroducirCoche(char[][] matriz, int fila, int columna, Scanner teclado, int nVehiculos,Object vehiculo) {
+		String marca=null;
+		String modelo=null;
+		String matricula=null;
+		String dni=null;
+		boolean electrico= false;
+		
 		try {
 			System.out.println("Introduce la fila: ");
 			fila = teclado.nextInt();
@@ -157,6 +162,7 @@ public class Principal {
 				}
 			} else {
 				matriz[fila - 1][columna - 1] = 'C';
+				vehiculo= new Coche(marca,modelo,matricula,dni,electrico) ;
 				return true;
 			}
 
@@ -170,7 +176,7 @@ public class Principal {
 		return true;
 	}
 	
-//Funcion que comprueba si se puede introducir una moto en la posicion deseada y si puede,lo introduce en la matriz	
+//Funcion que comprueba si se puede introducir una moto en la posicion deseada y si puede,lo introduce en la matriz,tambien pide los datos al usuario del vehiculo
 	private static boolean IntroducirMoto(char[][] matriz, int fila, int columna, Scanner teclado) {
 
 		try {
@@ -198,6 +204,7 @@ public class Principal {
 				}
 			} else {
 				matriz[fila - 1][columna - 1] = 'M';
+				
 				return true;
 			}
 
@@ -211,7 +218,7 @@ public class Principal {
 		return true;
 	}
 
-//Funcion que comprueba si se puede introducir un autobus en la posicion deseada y si puede  lo introduce en la matriz
+//Funcion que comprueba si se puede introducir un autobus en la posicion deseada y si puede  lo introduce en la matriz,tambien pide los datos al usuario del vehiculo
 	private static boolean IntroducirAutobus(char[][] matriz, int fila, int columna, Scanner teclado) {
 
 		try {
